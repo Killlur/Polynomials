@@ -22,7 +22,7 @@ class Polynomial:
         else:
             eqn = "y=-" if abs(inlist[0]) != inlist[0] else "y="
             for i in range(self.degree+1):
-                eqn += f'{abs(inlist[i]) if abs(inlist[i]) !=1 else ""}x{self.__get_super(str(self.degree - i))}{"" if inlist[i+1] == (None) else ("-" if abs([i for i in inlist[i:] if i!=0][0]) == [i for i in inlist[i:] if i!=0][0] else "+")}' if (inlist[i] != 0 and self.degree - i != 0) else (f'{inlist[i]}' if inlist[i] !=0 else "")
+                eqn += f'{abs(inlist[i]) if abs(inlist[i]) !=1 else ""}x{self.__get_super(str(self.degree - i))}{"" if ((inlist[i + 1]  is None) or not all(inlist[i:])) else ("-" if abs([g for g in inlist[i:] if g != 0][0]) != [h for h in inlist[i:] if h != 0][0] else "+")}' if (inlist[i] != 0 and self.degree - i != 0) else (f'{inlist[i]}' if inlist[i] != 0 else "")
         return eqn
     def plotpolynomial(self,range=[-100,100]):
 
@@ -66,4 +66,9 @@ class Projectile:
 tp = Projectile(20,10,225)
 print(tp.Range())
 tp.Projection()
+
+poly1 = Polynomial([3,0,0])
+print(poly1.valueofpolynomial(5),poly1.degree,poly1.nameofpolynomial())
+poly1.plotpolynomial()
+
 
