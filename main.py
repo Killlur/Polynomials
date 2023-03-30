@@ -54,7 +54,10 @@ class Projectile:
 
         a= (-self.gravity)/(2*(self.velocity**2)*(math.cos(self.aop)**2))
         b=(math.tan(self.aop))
+        print(a,b)
         self.parabola=Polynomial((a,b,0))
+
+
 
     def Range(self):
         return ((self.velocity**2) * math.sin(2*self.aop))/self.gravity
@@ -67,8 +70,5 @@ tp = Projectile(20,10,225)
 print(tp.Range())
 tp.Projection()
 
-poly1 = Polynomial([3,0,0])
-print(poly1.valueofpolynomial(5),poly1.degree,poly1.nameofpolynomial())
-poly1.plotpolynomial()
 
 
