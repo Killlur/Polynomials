@@ -19,7 +19,7 @@ def plotpolynomial(inlist1=[]):
 
     x = np.linspace(-a,a)
     fig,ax = plt.subplots()
-    ax.plot(x,polynomial([x] + pollist),label=)
+    ax.plot(x,polynomial([x] + pollist))
     # ax.set(ylim=(-abs(polynomial([a] + pollist)),abs(polynomial([a] + pollist))))
     plt.show()
 
