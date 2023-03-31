@@ -21,11 +21,9 @@ class Polynomial:
         else:
             eqn = "y=-" if abs(inlist[0]) != inlist[0] else "y="
             for i in range(self.degree+1):
-                print(inlist[i])
-                eqn += f'{abs(inlist[i]) if abs(inlist[i]) !=1 else ""}x{self.__get_super(str(self.degree - i))}{"" if ((inlist[i +1]  is None) or all(f == 0 for f in inlist[i+1:])) else ("-" if abs([g for g in inlist[i+1:] if g != 0][0]) != [h for h in inlist[i+1:] if h != 0][0] else "+")}' if (inlist[i] != 0 and self.degree - i != 0) else (f'{abs(inlist[i])}' if inlist[i] != 0 else "")
-                print(eqn)
+                eqn += f'{abs(inlist[i]) if abs(inlist[i]) !=1 else ""}x{self.__get_super(str(self.degree - i)) if self.degree-i != 1 else ""}{"" if ((inlist[i +1]  is None) or all(f == 0 for f in inlist[i+1:])) else ("-" if abs([g for g in inlist[i+1:] if g != 0][0]) != [h for h in inlist[i+1:] if h != 0][0] else "+")}' if (inlist[i] != 0 and self.degree - i != 0) else (f'{abs(inlist[i])}' if inlist[i] != 0 else "")
         return eqn
-    def plotpolynomial(self, rnge=None):
+    def plotpolynomial(self, xlim=None,ylim=None,rnge=None):
 
         if rnge is None:
             rnge = [-100, 100]
@@ -33,7 +31,10 @@ class Polynomial:
         fig, ax = plt.subplots()
 
         ax.plot(x, self.valueofpolynomial(x),label=self.nameofpolynomial())
-        ax.plot(x,Polynomial([0]).valueofpolynomial(x))
+        ax.set(ylim=ylim,xlim=xlim)
+        ax.plot(x,Polynomial([0]).valueofpolynomial(x),linestyle='dashed')
+        ax.plot(0,0, marker='o')
+        plt.grid(True)
         plt.legend()
         plt.show()
 
@@ -55,6 +56,8 @@ class Projectile:
         self.velocity = u
         self.gravity=abs(a)
         self.aop=math.radians(theta)
+        self.range = ((self.velocity**2) * math.sin(2*self.aop))/self.gravity
+        self.maxheight = ((self.velocity**2)*(math.sin(self.aop)**2))/(2*self.gravity)
 
         a= round((-self.gravity)/(2*(self.velocity**2)*(math.cos(self.aop)**2)),5)
         b=round((math.tan(self.aop)),5)
@@ -63,10 +66,51 @@ class Projectile:
     def Range(self):
         return ((self.velocity**2) * math.sin(2*self.aop))/self.gravity
 
-    def Projection(self):
+    def MaxHeight(self):
+        return ((self.velocity**2)*(math.sin(self.aop)**2))/(2*self.gravity)
 
-        self.parabola.plotpolynomial([-50,50])
+    def Projection(self,ylimh=None,xlimh=None,xlinspace=None):
+        if ylimh is None:
+            ylimh = self.__autoMH()
+        if xlimh is None:
+            xlimh = self.__autoR()
+        if xlinspace is None:
+            xlinspace = self.__autoLS()
+        print(xlimh,ylimh)
+        self.parabola.plotpolynomial(xlimh,ylimh,xlinspace)
+    def __autoR(self):
+        print(self.aop)
+        if (self.aop > 0 and self.aop < math.pi/2):
+            return [-5,self.range +10]
+        elif (self.aop > (3/2)*math.pi and self.aop < math.pi*2):
+            return [-5,100]
+        elif (self.aop > math.pi/2 and self.aop < math.pi):
+            return [self.range -10,5]
+        elif (self.aop > math.pi and self.aop < (3/2)*math.pi):
+            return [-100,5]
+        else:
+            raise "your angle is dumb"
+    def __autoLS(self):
+        print(self.aop)
+        if (self.aop > 0 and self.aop < math.pi/2):
+            return [0,self.range]
+        elif (self.aop > (3/2)*math.pi and self.aop < math.pi*2):
+            return [-5,100]
+        elif (self.aop > math.pi/2 and self.aop < math.pi):
+            return [self.range,0]
+        elif (self.aop > math.pi and self.aop < (3/2)*math.pi):
+            return [-100,5]
+        else:
+            raise "your angle is dumb"
+    def __autoMH(self):
+        if (self.aop > 0 and self.aop < math.pi):
+            return [-5,self.maxheight +20]
+        elif (self.aop > math.pi and self.aop < 2*math.pi):
+            return [-100,5]
+        else:
+            raise "your angle is dumb"
 
-
+a = Projectile(30,10,135)
+a.Projection()
 
 
