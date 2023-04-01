@@ -81,37 +81,39 @@ class Projectile:
         self.parabola.plotpolynomial(xlimh,ylimh,xlinspace,highlightpoint=[0,self.startheight])
     def __autoR(self):
         print(self.aop)
-        if (self.aop > 0 and self.aop < math.pi/2):
+        if (self.aop > 0 and self.aop < math.pi/2) or (self.aop < -(3/2)*math.pi and self.aop > -math.pi*2):
             return [-5,self.range +10]
-        elif (self.aop > (3/2)*math.pi and self.aop < math.pi*2):
+        elif (self.aop > (3/2)*math.pi and self.aop < math.pi*2) or (self.aop < 0 and self.aop > -math.pi/2):
             return [-5,100]
-        elif (self.aop > math.pi/2 and self.aop < math.pi):
+        elif (self.aop > math.pi/2 and self.aop < math.pi) or (self.aop > -(3/2)*math.pi and self.aop < -math.pi):
             return [self.range -10,5]
-        elif (self.aop > math.pi and self.aop < (3/2)*math.pi):
+        elif (self.aop > math.pi and self.aop < (3/2)*math.pi) or (self.aop > -math.pi and self.aop < -math.pi/2):
             return [-100,5]
         else:
             raise "your angle is dumb"
     def __autoLS(self):
         print(self.aop)
-        if (self.aop > 0 and self.aop < math.pi/2):
+        if (self.aop > 0 and self.aop < math.pi/2) or (self.aop < -(3/2)*math.pi and self.aop > -math.pi*2):
             return [0,self.range+(self.startheight*math.tan(self.aop))+5]
-        elif (self.aop > (3/2)*math.pi and self.aop < math.pi*2):
+        elif (self.aop > (3/2)*math.pi and self.aop < math.pi*2) or (self.aop < 0 and self.aop > -math.pi/2):
             return [-5,100]
-        elif (self.aop > math.pi/2 and self.aop < math.pi):
+        elif (self.aop > math.pi/2 and self.aop < math.pi) or (self.aop > -(3/2)*math.pi and self.aop < -math.pi):
             return [self.range+(self.startheight*math.tan(self.aop))-5,0]
-        elif (self.aop > math.pi and self.aop < (3/2)*math.pi):
+        elif (self.aop > math.pi and self.aop < (3/2)*math.pi) or (self.aop > -math.pi and self.aop < -math.pi/2):
             return [-100,5]
         else:
             raise "your angle is dumb"
     def __autoMH(self):
-        if (self.aop > 0 and self.aop < math.pi):
+        if (self.aop > 0 and self.aop < math.pi) or (self.aop < -math.pi and self.aop > -2*math.pi):
             return [self.startheight-5,self.maxheight +20]
-        elif (self.aop > math.pi and self.aop < 2*math.pi):
+        elif (self.aop > math.pi and self.aop < 2*math.pi) or (self.aop > -math.pi and self.aop < 0):
             return [-100,self.startheight+5]
         else:
             raise "your angle is dumb"
 
-a = Projectile(30,10,225,10)
+
+a = Projectile(30,10,-135,10)
 a.Projection()
 
 
+#y=-0.01111x²-x+10
